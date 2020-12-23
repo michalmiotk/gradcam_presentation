@@ -1,0 +1,170 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="author" content="Michal Miotk & Kamil Orlow">
+
+  <title>Weapon Detection using Synthethic datasets</title>
+
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="css/highlight/isbl-editor-light.css">
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+    <section>
+      <h2>GradCAM explained</h2>
+      <small>Author: Michał Miotk</small>
+    </section>
+    <section>
+      <h1>Agenda</h1>
+      <ol>
+        <li>Introduction</li>
+        <li>Analysed architecture</li>
+        <li>Some basics of CNN</li>
+        <li>GradCAM details</li>
+        <li>Links</li>
+      </ol>
+    </section>
+    <section>
+        <section>
+            <h2>Introduction</h2>
+            <p>In world of huge deep learning models it is more and more complicated to understand it</p>
+            <p>It is obligatory to have special tools to explain neural network output</p>
+            <p>Without explanatory we can treat neural networks as blackboxes and it is ok as long everything works</p>
+        </section>
+        <section>
+            <h2>Expected output</h2>
+            <img src = "images/expected_output.jpg" />
+        </section>
+    </section>
+    <section>
+      <h3>Analysed architecture - VGG19</h3>
+      <li>simple - convolutions for extracting features, linears layer for classification</li>
+      <li>Input 224x224x3, output 1000 classes</li>
+      <li>dimishing gradients</li>
+      <li>it is better version of vgg16</li>
+      <li>invented by VGG (Visual Geometry Group) from University of Oxford</li>
+      <li>Imagenet has 1.3milion images</li>
+      <li>16convs 3 linears</li>
+    </section>
+    <section>
+      <section>
+        <p>Some basics of cnns - convolution, relu, maxpool</p>
+      </section>
+      <section>
+        <h3>Convolution</h3>
+        <img src = "images/convolution.png" />
+      </section>
+      <section>
+        <h3>ReLU</h3>
+        <img src = "images/relu.png" />
+      </section>
+      <section>
+        <h3>Maxpooling</h3>
+        <img src = "images/max_pooling.png" />
+      </section>
+      <section>
+        <h1>DEMO time</h1>
+        https://colab.research.google.com/drive/1OP7ieSS5PZZJtU-rcQAzeqfNC4Nj4CD0?usp=sharing
+      </section>
+    </section>
+  <section>
+    <section>
+      <h1>Grad-CAM details</h1>
+      <li>class discriminative - Class
+        Activation Mapping (CAM) - but not requires change in model</li>
+      <li>image classification, image captioning, and visual question answering
+        (VQA)</li>
+      <li>http://vqa.cloudcv.org/</li>
+      <li>Weakly-supervised localization</li>
+    </section>
+    <section>
+      <p>,,compute the gradient of
+        the score for class c, yc
+        (before the softmax), with respect to
+        feature map activations Ak of a convolutional layer" - from paper</p>
+      <img src = "images/calc1.png" />
+     
+    </section>
+    <section>
+      <p>,,weighted combination of forward activation
+        maps, and follow it by a ReLU"-from paper</p>
+      <img src = "images/calc2.png" />
+    </section>
+    <section>
+      <p>,,We apply a ReLU to the linear combination
+      of maps because we are only interested in the features that
+      have a positive influence on the class of interest, i.e. pixels
+      whose intensity should be increased in order to increase y
+      c
+      .
+      Negative pixels are likely to belong to other categories in the
+      image. '' - from paper
+      </p>
+    </section>
+    <section>
+      <h1>DEMO TIME</h1>
+      https://colab.research.google.com/drive/1GgiK72US2yy94J_8mUHT18ZVFrEhNIi5?usp=sharing
+    </section>
+
+  </section>
+  <section>
+    <h3>Links</h3>    
+    <ul>
+      <li>paper - https://arxiv.org/pdf/1610.02391.pdf</li>
+      <li>https://towardsdatascience.com/extract-features-visualize-filters-and-feature-maps-in-vgg16-and-vgg19-cnn-models-d2da6333edd0</li>
+      <li>https://medium.com/@chinesh4/generalized-way-of-interpreting-cnns-a7d1b0178709</li>
+      <li>https://github.com/kazuto1011/grad-cam-pytorch/blob/master/grad_cam.py</li>
+    </ul> 
+ </section>
+  <section>
+    <p>Questions ?</p>
+  </section>
+  </div>
+</div>
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/math/math.js"></script>
+<script>
+  // More info about config & dependencies:
+  // - https://github.com/hakimel/reveal.js#configuration
+  // - https://github.com/hakimel/reveal.js#dependencies
+  Reveal.initialize({
+    hash: true,
+    controls: true,
+    progress: true,
+    slideNumber: false,
+    overview: true,
+    center: true,
+    navigationMode: 'default',
+    fragmentInURL: false,
+    embedded: false,
+    preloadIframes: null,
+    autoSlide: 0,
+    autoSlideStoppable: true,
+    defaultTiming: 120,
+    mouseWheel: false,
+    previewLinks: false,
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+    transitionSpeed: 'default', // default/fast/slow
+    backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+    display: 'block',
+    math: {
+      mathjax: 'plugin/math/MathJax.js',
+      config: 'TeX-AMS_HTML-full', // See http://docs.mathjax.org/en/latest/config-files.html
+      // pass other options into `MathJax.Hub.Config()`
+      TeX: { Macros: { RR: "{\\bf R}" } }
+    },
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+  });
+</script>
+</body>
+</html>
